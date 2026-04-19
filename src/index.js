@@ -37,34 +37,35 @@ const filters = new Map();
 const dispatch = new Map();
 const selector =
 	"[filter-query], [filter-key], [filter-query-key], [filter-search], [filter-sort-key], [filter-on], [filter-limit], [filter-index]";
+let initFiltersPromise = null;
 
 async function init(element) {
-	element = document.querySelectorAll(selector);
-	for (let i = 0; i < element.length; i++) {
-		await initElement(element[i]);
-	}
+    if (!element) return;
+    
+    // Normalize input to an iterable array
+    let elements = element;
+    if (
+        !(elements instanceof HTMLCollection) &&
+        !(elements instanceof NodeList) &&
+        !Array.isArray(elements)
+    ) {
+        elements = [elements];
+    }
 
-	// if (!element) {
-	// 	element = document.querySelectorAll(selector);
-	// 	for (let i = 0; i < element.length; i++) {
-	// 		await initElement(element[i]);
-	// 	}
-	// } else {
-	// 	if (
-	// 		!(element instanceof HTMLCollection) &&
-	// 		!(element instanceof NodeList) &&
-	// 		!Array.isArray(element)
-	// 	) {
-	// 		element = [element];
-	// 	}
-	// 	for (let i = 0; i < element.length; i++) {
-	// 		if (element[i].matches(selector)) {
-	// 			await initElement(element[i]);
-	// 		}
-	// 	}
-	// }
+    // Filter down to only the elements that match the selector
+    const matchedElements = Array.from(elements).filter(el => el.matches(selector));
 
-	return true;
+    if (matchedElements.length > 0) {
+        // 2. Await the initial filters to finish before processing matched elements
+        if (initFiltersPromise) {
+            await initFiltersPromise;
+        }
+
+        // Process all matched elements concurrently
+        await Promise.all(matchedElements.map(el => initElement(el)));
+    }
+
+    return true;
 }
 
 async function initElement(element) {
@@ -487,7 +488,18 @@ observer.init({
 	}
 });
 
-init();
+async function initFilters() {
+    // Convert NodeList to an Array so we can use .map()
+    let elements = Array.from(document.querySelectorAll(selector));
+    
+    // Process all initial elements concurrently
+    await Promise.all(elements.map(el => initElement(el)));
+    
+    return true;
+}
+
+// 4. Start the initial run and capture its Promise
+initFiltersPromise = initFilters();
 
 export default {
 	init,
