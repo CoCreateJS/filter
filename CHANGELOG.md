@@ -1,3 +1,13 @@
+## [1.33.7](https://github.com/CoCreate-app/CoCreate-filter/compare/v1.33.6...v1.33.7) (2026-07-11)
+
+
+### Bug Fixes
+
+* bump package versions ([3f5d3aa](https://github.com/CoCreate-app/CoCreate-filter/commit/3f5d3aa5b6372e581067b10ba6a114b31b2509a9))
+* improve init function to handle element input and process matched elements concurrently ([614d9ca](https://github.com/CoCreate-app/CoCreate-filter/commit/614d9ca4d5ce4f505d2adc5b7f506a1f60be80b7))
+* removed post install and add add packages to apprved list ([7f9d266](https://github.com/CoCreate-app/CoCreate-filter/commit/7f9d2667d04aa6bcf7d022e5ea89357b435f69d3))
+* semantic version handling ([b55e4ea](https://github.com/CoCreate-app/CoCreate-filter/commit/b55e4eadb178ebf023483ae454d0d6394b675b66))
+
 ## [1.33.6](https://github.com/CoCreate-app/CoCreate-filter/compare/v1.33.5...v1.33.6) (2026-01-19)
 
 
