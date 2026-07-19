@@ -1,3 +1,10 @@
+## [1.34.2](https://github.com/CoCreate-app/CoCreate-filter/compare/v1.34.1...v1.34.2) (2026-07-19)
+
+
+### Bug Fixes
+
+* set default branch to main ([0a6fba9](https://github.com/CoCreate-app/CoCreate-filter/commit/0a6fba9d697e2b1c0c2e920639f3b665016bbfbc))
+
 ## [1.34.1](https://github.com/CoCreate-app/CoCreate-filter/compare/v1.34.0...v1.34.1) (2026-07-17)
 
 
