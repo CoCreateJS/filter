@@ -13,7 +13,7 @@ Fork the [project on Github](https://github.com/CoCreate-app/CoCreate-filter) an
 ```
 git filter https://github.com/contributor/CoCreate-filter.git
 cd CoCreate-filter
-git remote add upstream https://github.com/CoCreate-app/CoCreate-filter.git
+git remote add upstream https://gitlab.com/cocreatejs/CoCreate-filter.git
 ```
 
 ## Create a Topic Branch

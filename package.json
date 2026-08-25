@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CoCreate-app/CoCreate-filter.git"
+    "url": "git+https://gitlab.com/cocreatejs/CoCreate-filter.git"
   },
   "author": "CoCreate LLC",
   "license": "AGPL-3.0",
