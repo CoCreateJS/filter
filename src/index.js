@@ -143,14 +143,11 @@ async function getFilter(element) {
 
                 if (filterEl.sort) mergeSort(filter, filterEl);
 
-                if (filterEl.search)
-                    filter.search = [
-                        ...(filter.search || []),
-                        ...filterEl.search
-                    ];
             }
         }
     }
+
+    setSearch(filter, element);
 
     if (!element.hasAttribute("filter-limit")) {
         filter.limit = 20;
@@ -198,9 +195,9 @@ async function updateFilter(element, loadMore) {
 
             if (newFilter.sort) mergeSort(filter, newFilter);
 
-            if (newFilter.search)
-                filter.search = [...(filter.search || []), ...newFilter.search];
         }
+
+        setSearch(filter, els[i]);
 
         if (loadMore) {
             if (!element.hasAttribute("filter-limit")) {
@@ -338,11 +335,32 @@ async function applySearch(filter, element) {
         !checkValue(value) ||
         !checkValue(operator) ||
         !checkValue(caseSensitive)
-    )
+    ) {
+        delete filter.search;
         return (filter.isFilter = false);
+    }
 
-    if (!filter.search) filter.search = [];
-    filter.search.push({ value, operator, caseSensitive });
+    filter.search = [{ value, operator, caseSensitive }];
+}
+
+function setSearch(filter, element) {
+    const search = [];
+
+    for (const [filterElement, elementFilter] of elements) {
+        if (!filterElement.hasAttribute("filter-search")) continue;
+
+        const filteredElements = filterElement.hasAttribute("filter-query")
+            ? queryElements({ element: filterElement, prefix: "filter" })
+            : [filterElement];
+
+        if (!filteredElements || !Array.from(filteredElements).includes(element))
+            continue;
+
+        if (elementFilter.search?.[0]) search.push(elementFilter.search[0]);
+    }
+
+    if (search.length) filter.search = search;
+    else delete filter.search;
 }
 
 function applySort(filter, element) {
