@@ -326,7 +326,11 @@ async function applyQuery(filter, element) {
 
     if (value === null && element.getValue) value = await element.getValue();
 
-    if (value === "" || (Array.isArray(value) && value.length === 0)) {
+    if (
+        value === "" ||
+        (Array.isArray(value) && value.length === 0) ||
+        (element.matches('input[type="checkbox"]') && value === false)
+    ) {
         removeQueryKey(filter.query, key);
         filter[clearedQueryKeys] = [key];
         delete filter.isFilter;
@@ -460,13 +464,36 @@ function initFilterOnEvent(element) {
         for (let el of elements.keys()) {
             let type = el.getAttribute("filter-on");
             switch (type) {
-                case "scroll":
-                    // Re-observe scroll triggers after data update
-                    intersectionObserver.observe(el);
+                case "scroll": {
+                    const targets = queryElements({
+                        element: el,
+                        prefix: "filter"
+                    });
+                    if (!targets.includes(element)) break;
+
+                    const responseFilter = responseData?.filter || {};
+                    const targetFilter = filters.get(element) || {};
+                    const count = responseFilter.count ?? targetFilter.count;
+                    const index = responseFilter.index ?? targetFilter.index;
+                    const limit = responseFilter.limit ?? targetFilter.limit;
+                    const resultType = responseData?.method?.split(".")[0];
+                    const records = resultType && Array.isArray(responseData?.[resultType])
+                        ? responseData[resultType]
+                        : null;
+                    const hasMore = count !== undefined && index !== undefined
+                        ? index < count
+                        : Number(limit) > 0 && records !== null && records.length >= limit;
+
+                    if (hasMore) intersectionObserver.observe(el);
+                    else intersectionObserver.unobserve(el);
                     break;
+                }
                 case "fetched":
                     const filter = filters.get(element);
-                    const count = responseData?.count ?? responseData?.total ?? filter?.count;
+                    const count = responseData?.count ??
+                        responseData?.total ??
+                        responseData?.filter?.count ??
+                        filter?.count;
                     if (count !== undefined && typeof el.setValue === "function") {
                         el.setValue(count);
                     }
