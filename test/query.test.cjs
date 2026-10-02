@@ -6,6 +6,7 @@ const test = require('node:test');
 
 async function setup() {
     const utils = await import('@cocreate/utils');
+    const observers = [];
     const context = vm.createContext({
         console,
         document: { querySelectorAll: () => [] },
@@ -18,13 +19,15 @@ async function setup() {
     await module.link((specifier) => {
         const exports = specifier === '@cocreate/utils'
             ? { ...utils, queryElements: ({ element }) => element.targets || [] }
-            : specifier === '@cocreate/observer' ? { default: { init() {} } } : {};
+            : specifier === '@cocreate/observer' ? { default: { init(options) { observers.push(options); } } } : {};
         return new vm.SyntheticModule(Object.keys(exports), function () {
             for (const [key, value] of Object.entries(exports)) this.setExport(key, value);
         }, { context });
     });
     await module.evaluate();
-    return module.namespace.default;
+    const api = module.namespace.default;
+    api.observers = observers;
+    return api;
 }
 
 function element(value, attributes = {}, targets = []) {
@@ -35,7 +38,9 @@ function element(value, attributes = {}, targets = []) {
         hasAttribute(name) { return Object.hasOwn(this.attributes, name); },
         async getValue() { return this.value; },
         matches(selector) {
-            return selector === 'input[type="radio"]' ? this.attributes.type === 'radio' : true;
+            if (selector === 'input[type="radio"]') return this.attributes.type === 'radio';
+            if (selector === 'input[type="checkbox"]') return this.attributes.type === 'checkbox';
+            return true;
         },
         addEventListener(name, callback) { listeners.set(name, callback); },
         input() { listeners.get('input')(); }
@@ -195,4 +200,33 @@ test('a valid condition recovers from a previously invalid filter', async () => 
     const filter = await api.getFilter(target);
     assert.notEqual(filter.isFilter, false);
     assert.equal(filter.query.name, 'logo.svg');
+});
+
+test('changing a target filter recomposes current shared filter values', async () => {
+    const api = await setup();
+    const target = element('', {
+        'filter-query-key': 'content-type.$ne',
+        'filter-query-value': ''
+    });
+    const path = element('', {
+        'filter-query-key': 'path',
+        'filter-query': '#target'
+    }, [target]);
+    await api.init([target, path]);
+
+    // State updates input.value directly without emitting an input event.
+    path.value = '/';
+    target.attributes['filter-query-value'] = 'text/directory';
+    const filter = await new Promise(resolve => {
+        target.setFilter = resolve;
+        const observer = api.observers.find(item => item.name === 'CoCreateFilterObserver');
+        observer.callback({
+            target,
+            attributeName: 'filter-query-value',
+            oldValue: ''
+        });
+    });
+
+    assert.equal(filter.query.path, '/');
+    assert.equal(filter.query['content-type'].$ne, 'text/directory');
 });

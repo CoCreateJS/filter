@@ -185,7 +185,9 @@ async function getFilter(element) {
 }
 
 async function updateFilter(element, loadMore) {
-    let newFilter = await getElementFilters(element);
+    // Refresh the changed source first. Each target is then rebuilt below so
+    // it also receives the current values from every shared filter source.
+    await getElementFilters(element);
 
     let els = [];
     if (element.hasAttribute("filter-query")) {
@@ -195,26 +197,8 @@ async function updateFilter(element, loadMore) {
     }
 
     for (let i = 0; i < els.length; i++) {
-        let filter = filters.get(els[i]);
-        if (!filter) return (filter = { isFilter: false });
-        if (newFilter) {
-            for (const key of newFilter[clearedQueryKeys] || []) removeQueryKey(filter.query, key);
-            if (newFilter.query) {
-                filter.query = mergeObject(filter.query || {}, newFilter.query);
-                filter.query = dotNotationToObject(filter.query);
-            }
-
-            if (newFilter.key)
-                filter.key = {
-                    ...(filter.key || {}),
-                    ...newFilter.key
-                };
-
-            if (newFilter.sort) mergeSort(filter, newFilter);
-
-        }
-
-        if (!await setSearch(filter, els[i])) continue;
+        const filter = await getFilter(els[i]);
+        if (!filter || filter.isFilter === false) continue;
 
         if (loadMore) {
             if (!element.hasAttribute("filter-limit")) {
