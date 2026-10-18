@@ -34,6 +34,8 @@ import {
 
 const elements = new Map();
 const filters = new Map();
+const initializedElements = new WeakSet();
+const initializingElements = new WeakMap();
 const clearedQueryKeys = Symbol("clearedQueryKeys");
 const dispatch = new Map();
 const searchVersions = new WeakMap();
@@ -72,31 +74,42 @@ async function init(element) {
     return true;
 }
 
-async function initElement(element) {
-    let filteredElements = [];
-    if (!elements.has(element)) {
-        await getElementFilters(element);
+function initElement(element) {
+    if (initializedElements.has(element)) return Promise.resolve(filters);
+    const pending = initializingElements.get(element);
+    if (pending) return pending;
 
-        initElementEvents(element);
-        if (element.hasAttribute("filter-query")) {
-            filteredElements = queryElements({ element, prefix: "filter" });
-        } else {
-            filteredElements = [element];
-        }
+    const initialization = (async () => {
+        try {
+            // getFilter() may already have cached this target while initializing
+            // another control (for example, a table column's sort button).
+            // A cached filter does not mean the target's own events and
+            // getFilter method have been installed.
+            await getElementFilters(element);
+            initElementEvents(element);
 
-        for (let j = 0; j < filteredElements.length; j++) {
-            if (!filteredElements[j]) continue;
+            const filteredElements = element.hasAttribute("filter-query")
+                ? queryElements({ element, prefix: "filter" })
+                : [element];
 
-            if (!filters.has(filteredElements[j])) {
-                initFilterOnEvent(filteredElements[j]);
-                await getFilter(filteredElements[j]);
-                filteredElements[j].getFilter = async () =>
-                    await getFilter(filteredElements[j]);
+            for (const target of filteredElements) {
+                if (!target) continue;
+                if (!filters.has(target)) {
+                    initFilterOnEvent(target);
+                    await getFilter(target);
+                }
+                if (!target.getFilter)
+                    target.getFilter = async () => await getFilter(target);
             }
-        }
-    }
 
-    return filters;
+            initializedElements.add(element);
+            return filters;
+        } finally {
+            initializingElements.delete(element);
+        }
+    })();
+    initializingElements.set(element, initialization);
+    return initialization;
 }
 
 function initElementEvents(element) {
@@ -125,6 +138,9 @@ function initClickEvent(element) {
 async function getElementFilters(element) {
     let filter = filters.get(element) || {};
 
+    // Sorts are derived from the current attributes and filter sources.
+    // Rebuild them so a view switch cannot retain its previous sort key.
+    delete filter.sort;
     if (element.hasAttribute("filter-sort-key")) applySort(filter, element);
     if (element.hasAttribute("filter-key")) await applyKey(filter, element);
     if (element.hasAttribute("filter-query-key"))
@@ -560,6 +576,8 @@ observer.init({
     types: ["removedNodes"],
     selector,
     callback: function (mutation) {
+        initializedElements.delete(mutation.target);
+        initializingElements.delete(mutation.target);
         elements.delete(mutation.target);
         filters.delete(mutation.target);
         dispatch.delete(mutation.target);
