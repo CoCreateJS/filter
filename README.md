@@ -4,22 +4,22 @@
 
 The module does not fetch or render records by itself. It collects filter state from one or more elements and exposes that state to the element or data module that owns the result set.
 
-[Docs and demo](https://cocreate.app/docs/filter) | [Changelog](https://github.com/CoCreate-app/CoCreate-filter/blob/master/CHANGELOG.md) | [Issues](https://github.com/CoCreate-app/CoCreate-filter/issues)
+[Docs and demo](https://CoCreateJS.com/docs/filter) | [Changelog](https://github.com/CoCreateJS/CoCreate-filter/blob/master/CHANGELOG.md) | [Issues](https://github.com/CoCreateJS/CoCreate-filter/issues)
 
-![minified](https://img.badgesize.io/https://cdn.cocreate.app/filter/latest/CoCreate-filter.min.js?style=flat-square&label=minified&color=orange)
-![gzip](https://img.badgesize.io/https://cdn.cocreate.app/filter/latest/CoCreate-filter.min.js?compression=gzip&style=flat-square&label=gzip&color=yellow)
-![brotli](https://img.badgesize.io/https://cdn.cocreate.app/filter/latest/CoCreate-filter.min.js?compression=brotli&style=flat-square&label=brotli)
+![minified](https://img.badgesize.io/https://cdn.CoCreateJS.com/filter/latest/CoCreate-filter.min.js?style=flat-square&label=minified&color=orange)
+![gzip](https://img.badgesize.io/https://cdn.CoCreateJS.com/filter/latest/CoCreate-filter.min.js?compression=gzip&style=flat-square&label=gzip&color=yellow)
+![brotli](https://img.badgesize.io/https://cdn.CoCreateJS.com/filter/latest/CoCreate-filter.min.js?compression=brotli&style=flat-square&label=brotli)
 ![GitHub latest release](https://img.shields.io/github/v/release/CoCreate-app/CoCreate-filter?style=flat-square)
 ![License](https://img.shields.io/github/license/CoCreate-app/CoCreate-filter?style=flat-square)
 
-![CoCreate-filter](https://cdn.cocreate.app/docs/CoCreate-filter.gif)
+![CoCreate-filter](https://cdn.CoCreateJS.com/docs/CoCreate-filter.gif)
 
 ## Installation
 
 ### CDN
 
 ```html
-<script src="https://cdn.cocreate.app/filter/latest/CoCreate-filter.min.js"></script>
+<script src="https://cdn.CoCreateJS.com/filter/latest/CoCreate-filter.min.js"></script>
 ```
 
 ### npm
@@ -261,11 +261,11 @@ Sort controls only attach their automatic change listener for `INPUT`, `TEXTAREA
 
 ## Contributing
 
-Please read the [contributing guide](https://github.com/CoCreate-app/CoCreate-filter/blob/master/CONTRIBUTING.md), open an [issue](https://github.com/CoCreate-app/CoCreate-filter/issues), or submit a pull request. Changes to attribute names, filter shape, debounce behavior, and lifecycle events are compatibility-sensitive and should include documentation and an example.
+Please read the [contributing guide](https://github.com/CoCreateJS/CoCreate-filter/blob/master/CONTRIBUTING.md), open an [issue](https://github.com/CoCreateJS/CoCreate-filter/issues), or submit a pull request. Changes to attribute names, filter shape, debounce behavior, and lifecycle events are compatibility-sensitive and should include documentation and an example.
 
 ## License
 
 This software is dual-licensed under the GNU Affero General Public License version 3 (AGPLv3) and a commercial license.
 
-- **Open source use:** For open-source projects and non-commercial use, the software is available under the AGPLv3. See the [LICENSE file](https://github.com/CoCreate-app/CoCreate-filter/blob/master/LICENSE).
-- **Commercial use:** For-profit use requires a commercial license from [CoCreate](https://cocreate.app).
+- **Open source use:** For open-source projects and non-commercial use, the software is available under the AGPLv3. See the [LICENSE file](https://github.com/CoCreateJS/CoCreate-filter/blob/master/LICENSE).
+- **Commercial use:** For-profit use requires a commercial license from [CoCreate](https://CoCreateJS.com).
