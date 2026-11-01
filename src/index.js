@@ -32,7 +32,17 @@ import {
     dotNotationToObject
 } from "@cocreate/utils";
 
+/**
+ *
+ * @public
+ * @environment client
+ */
 const elements = new Map();
+/**
+ *
+ * @public
+ * @environment client
+ */
 const filters = new Map();
 const initializedElements = new WeakSet();
 const initializingElements = new WeakMap();
@@ -45,6 +55,11 @@ const selector =
     "[filter-query], [filter-key], [filter-query-key], [filter-search], [filter-sort-key], [filter-on], [filter-limit], [filter-index]";
 let initFiltersPromise = null;
 
+/**
+ *
+ * @public
+ * @environment client
+ */
 async function init(element) {
     if (!element) return;
 
@@ -99,6 +114,11 @@ function initElement(element) {
                     await getFilter(target);
                 }
                 if (!target.getFilter)
+                    /**
+                     *
+ * @public
+ * @environment client
+ */
                     target.getFilter = async () => await getFilter(target);
             }
 
@@ -598,7 +618,180 @@ export default {
     getFilter,
     elements,
     filters,
+    /**
+     *
+ * @public
+ * @environment client
+ */
     queryData,
+    /**
+     *
+ * @public
+ * @environment client
+ */
     searchData,
+    /**
+     *
+ * @public
+ * @environment client
+ */
     sortData
 };
+
+/**
+ *
+ * @name filter-case-sensitive
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-index
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-key
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-limit
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-on
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-operator
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-query
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-query-key
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-query-options
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-query-value
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-search
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-sort-direction
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-sort-key
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-type
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-value
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name filter-value-type
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ *
+ * @name value
+ * @kind member
+ * @attribute
+ * @environment client
+ */
+
+/**
+ * A JavaScript api define attributes for filtering color, description, text, price or any list of document stored in db. Great for creating custom components like fetch, calender, datatables etc.
+ *
+ * @module filter
+ * @environment client
+ */
+
+/**
+ * Declarative selectors recognized by this module.
+ *
+ * @name declarative-selectors
+ * @kind member
+ * @selectors
+ * @environment client
+ * @example
+ * ```json
+ * [
+ *   "[filter-query], [filter-key], [filter-query-key], [filter-search], [filter-sort-key], [filter-on], [filter-limit], [filter-index]"
+ * ]
+ * ```
+ */
