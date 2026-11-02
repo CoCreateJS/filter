@@ -1,3 +1,25 @@
+# [1.35.0](https://github.com/CoCreateJS/filter/compare/v1.34.2...v1.35.0) (2026-11-02)
+
+
+### Bug Fixes
+
+* add Deno specific entries to .gitignore ([f0cf6a5](https://github.com/CoCreateJS/filter/commit/f0cf6a5a24bbf16582261b6744e31cd9974dcef6))
+* bump [@cocreate](https://github.com/cocreate) dependencies ([700be76](https://github.com/CoCreateJS/filter/commit/700be766ad3610588c4a854f2731d214c4f9b11f))
+* bump [@cocreate](https://github.com/cocreate) package versions ([0b1cfd6](https://github.com/CoCreateJS/filter/commit/0b1cfd6319a01553e65ed52e9b880f288027687a))
+* bump versions ([294448e](https://github.com/CoCreateJS/filter/commit/294448ef11ca1b2cd52db18714bfc8b913905825))
+* bump versions ([5532d13](https://github.com/CoCreateJS/filter/commit/5532d1313d33f8f99a514cb5b919385f50a718ca))
+* rebuild filters from current source values ([f501ac0](https://github.com/CoCreateJS/filter/commit/f501ac0a3428dc007f762efecc6df0c0432e10cf))
+* remove trailing slash from node_modules entry in .gitignore ([ee4b687](https://github.com/CoCreateJS/filter/commit/ee4b687810106f487228a2d1cf3e9aa7f27ffee5))
+* stop observing loaded filter elements ([04f45e4](https://github.com/CoCreateJS/filter/commit/04f45e42db32e8cf2761a4f3272745fcb78e0806))
+* stop pagination when results are exhausted ([e8b4bb5](https://github.com/CoCreateJS/filter/commit/e8b4bb5250ee5c7f9aba97eb214c264412dcf6cf))
+* update git url ([b047857](https://github.com/CoCreateJS/filter/commit/b04785763a33438c1e5ddb84201895da8a4b0754))
+* update GitHub Actions to use latest versions and sync package.json description ([12a5dc3](https://github.com/CoCreateJS/filter/commit/12a5dc3e3897c81d2472774fa040c6f7ba96c435))
+
+
+### Features
+
+* replace uuid import and usage with utils ([9001980](https://github.com/CoCreateJS/filter/commit/900198094569d2f4f96c6ddc38e466c8382a1f5d))
+
 ## [1.34.2](https://github.com/CoCreateJS/CoCreate-filter/compare/v1.34.1...v1.34.2) (2026-07-19)
 
 
