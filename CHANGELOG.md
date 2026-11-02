@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/CoCreateJS/filter/compare/v1.35.0...v2.0.0) (2026-11-02)
+
+
+### chore
+
+* record package identity migration as breaking ([4ec44f2](https://github.com/CoCreateJS/filter/commit/4ec44f29e75396bf42ed3cb1f99e5148cbf2a89c))
+
+
+### BREAKING CHANGES
+
+* Consumers must install @cocreate/filter and use the renamed CoCreateJS repository identity; the previous package and repository identities are no longer supported.
+
 # [1.35.0](https://github.com/CoCreateJS/filter/compare/v1.34.2...v1.35.0) (2026-11-02)
 
 
