@@ -1,19 +1,19 @@
 # Contributing to CoCreate-filter
 
-This project is work of [many contributors](https://github.com/CoCreateJS/CoCreate-filter/graphs/contributors).
-You're encouraged to submit [pull requests](https://github.com/CoCreateJS/CoCreate-filter/pulls),
-[propose features and discuss issues](https://github.com/CoCreateJS/CoCreate-filter/issues).
+This project is work of [many contributors](https://github.com/CoCreateJS/filter/graphs/contributors).
+You're encouraged to submit [pull requests](https://github.com/CoCreateJS/filter/pulls),
+[propose features and discuss issues](https://github.com/CoCreateJS/filter/issues).
 
 In the examples below, substitute your Github username for `contributor` in URLs.
 
 ## Fork the Project
 
-Fork the [project on Github](https://github.com/CoCreateJS/CoCreate-filter) and check out your copy.
+Fork the [project on Github](https://github.com/CoCreateJS/filter) and check out your copy.
 
 ```
 git filter https://github.com/contributor/CoCreate-filter.git
 cd CoCreate-filter
-git remote add upstream https://github.com/cocreatejs/CoCreate-filter.git
+git remote add upstream https://github.com/CoCreateJS/filter.git
 ```
 
 ## Create a Topic Branch
@@ -75,7 +75,7 @@ git push origin my-feature-branch
 
 ## Make a Pull Request
 
-Go to [https://github.com/CoCreateJS/CoCreate-filter](https://github.com/CoCreateJS/CoCreate-filter) and select your feature branch.
+Go to [https://github.com/CoCreateJS/filter](https://github.com/CoCreateJS/filter) and select your feature branch.
 Click the 'Pull Request' button and fill out the form. Pull requests are usually reviewed within a few days.
 
 ## Rebase
